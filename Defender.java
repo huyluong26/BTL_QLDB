@@ -48,10 +48,12 @@ public class Defender extends Player{
     }
 
     @Override
-    public void parameter() {
+    public boolean parameter() {
         System.out.println("Forward Parameters:");
         System.out.println("Số lần truy cản: " +interceptions  );
         System.out.println("Tỷ lệ tranh chấp bóng bổng thành công: " +aerialAbility +"%" );
         System.out.println("Tỷ lệ tắc bóng thành công: " + tackles + "%");
+
+        return false;
     }
 }

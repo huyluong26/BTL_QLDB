@@ -76,18 +76,12 @@ abstract public class Player {
     abstract public double salaryCalculation() ;
 
 
-    abstract public void parameter() ;
+    abstract public boolean parameter() ;
 
     @Override
     public String toString() {
-        return "Player{" +
-                "  shirtNumber=" + shirtNumber +
-                "  name='" + name + '\'' +
-                ", age=" + age +
-                ", nationality='" + nationality + '\'' +
-                ", numberOfAppearances=" + numberOfAppearances +
-                ", baseSalary=" + baseSalary +
-                ", marketValue=" + marketValue +
-                '}';
+        return String.format("%-15s %-20s %-15s %-15s %-25s %-20s %-20s",
+                shirtNumber, name, age, nationality, marketValue,numberOfAppearances,baseSalary);
     }
 }
+

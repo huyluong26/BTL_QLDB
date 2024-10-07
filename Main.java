@@ -10,17 +10,23 @@ public class Main {
             System.out.println("2.Bán cầu thủ");
             System.out.println("3.Hiển thị thông tin cầu thủ");
             System.out.println("4.Tính lương cầu thủ");
+            System.out.println("5.Tìm kiếm cầu thủ");
             System.out.println("===========================================");
             int choice = scanner.nextInt();
             if(choice == 1){
                 team.addAPlayer();
-
+            }
+            if(choice == 2){
+                team.RemovePlayer();
             }
             if(choice == 3){
                 team.DisplayInformation();
             }
             if(choice == 4){
                 team.calculateSalary();
+            }
+            if(choice == 5 ){
+                team.SeachPlayer();
             }
             else if (choice == 0){
                 break;

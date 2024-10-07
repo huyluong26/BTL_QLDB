@@ -48,10 +48,11 @@ public class Goalkeeper extends Player{
     }
 
     @Override
-    public void parameter() {
+    public boolean parameter() {
         System.out.println("Forward Parameters:");
         System.out.println("Số lần cản phá : " + saves);
         System.out.println("Tỷ lệ cản phá thành công : " +shotStoppingAbility +"%");
         System.out.println("Tỷ lệ bắt luân lưu thành công: " + penaltySavePercentage + "%");
+        return false;
     }
 }

@@ -99,19 +99,41 @@ public class Team {
         }
     }
     public void DisplayInformation(){
+        System.out.printf("%-15s %-20s %-15s %-15s %-25s %-20s %-20s\n"
+                ,"Số áo","Tên cầu thủ", "Tuổi", "Quốc tịch", "Giá trị chuyển nhượng","Số lần ra sân","Lương mỗi tuần ");
+        System.out.printf("%-15s %-20s %-15s %-15s %-25s %-20s %-20s\n", "-----", "-----------", "----",
+                "---------",  "---------------------", "-------------", "--------------");
         for (Player player : players) {
-            System.out.println("==============Thông tin cầu thủ==================");
             System.out.println(player.toString());
-            System.out.println("=================================================");
+
 
         }
+    }
+
+    public void RemovePlayer(){
+        System.out.println("Nhập vào tên cầu thủ cần bán ");
+        String name = scanner.nextLine();
+        scanner.nextLine();
+        boolean playerFound = false;
+        for (Player player : players) {
+            if (player.getName().equalsIgnoreCase(name)) {
+                players.remove(player);
+                playerFound = true;
+                break;
+            }
         }
+        if (playerFound) {
+            System.out.println("Cầu thủ "+name+" đã được bán ");
+        } else {
+            System.out.println("Cầu thủ " + name + " không tồn tại trong đội.");
+        }
+    }
+
     public void calculateSalary() {
         System.out.println("Nhập vào tên cầu thủ cần tính lương");
         String name = scanner.nextLine();
         double totalSalary = 0;
         boolean playerFound = false;
-
         for (Player player : players) {
             if (player.getName().equalsIgnoreCase(name)) {
                 totalSalary = player.salaryCalculation();
@@ -119,12 +141,36 @@ public class Team {
                 break;
             }
         }
-
         if (playerFound) {
             System.out.println("Tổng lương của cầu thủ " + name + " trên một tuần là : " + totalSalary);
         } else {
             System.out.println("Cầu thủ " + name + " không tồn tại trong đội.");
         }
     }
+
+    public void SeachPlayer(){
+        System.out.println("Nhập vào tên cầu thủ cần tìm");
+        String name = scanner.nextLine();
+        double totalSalary = 0;
+        boolean playerFound = false;
+        for (Player player : players) {
+            if (player.getName().equalsIgnoreCase(name)) {
+               System.out.println(player.toString());
+               System.out.println("==========Thống số===============");
+               System.out.println(player.parameter());
+               System.out.println("=================================");
+
+               playerFound = true;
+                break;
+            }
+        }
+        if (playerFound) {
+            System.out.println( name + "đã được tìm thấy");
+        } else {
+            System.out.println("Cầu thủ " + name + " không tồn tại trong đội.");
+        }
+    }
+
+
 
 }

@@ -51,10 +51,11 @@ public class Forward  extends Player  {
     }
 
     @Override
-    public void parameter() {
+    public boolean parameter() {
         System.out.println("Forward Parameters:");
         System.out.println("Goals: " + goal);
         System.out.println("Assists: " + assists);
         System.out.println("Dribbling Success Rate: " + dribblingSuccessRate + "%");
+        return false;
     }
 }
