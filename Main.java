@@ -16,6 +16,9 @@ public class Main {
                 team.addAPlayer();
 
             }
+            if(choice == 3){
+                team.DisplayInformation();
+            }
             if(choice == 4){
                 team.calculateSalary();
             }

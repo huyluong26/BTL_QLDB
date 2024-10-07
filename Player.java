@@ -81,10 +81,10 @@ abstract public class Player {
     @Override
     public String toString() {
         return "Player{" +
-                "name='" + name + '\'' +
+                "  shirtNumber=" + shirtNumber +
+                "  name='" + name + '\'' +
                 ", age=" + age +
                 ", nationality='" + nationality + '\'' +
-                ", shirtNumber=" + shirtNumber +
                 ", numberOfAppearances=" + numberOfAppearances +
                 ", baseSalary=" + baseSalary +
                 ", marketValue=" + marketValue +
