@@ -3,17 +3,15 @@ public class Forward  extends Player  {
     private int assists ;
     private float dribblingSuccessRate ;
 
-
-    public Forward(
-            String name, int age, String nationality, int shirtNumber, int numberOfAppearances,
-            double baseSalary, double marketValue, int goal, int assists, float dribblingSuccessRate
-    ) {
-        super(name, age, nationality, shirtNumber, numberOfAppearances, baseSalary, marketValue);
-        this.goal = goal ;
-        this.assists = assists ;
+    public Forward(String playerID, String name, int age, String nationality, String position, int shirtNumber, int numberOfAppearances, double baseSalary,
+                   double marketValue, int goal, int assists, float dribblingSuccessRate) {
+        super(playerID, name, age, nationality, position, shirtNumber, numberOfAppearances, baseSalary, marketValue);
+        this.goal = goal;
+        this.assists = assists;
         this.dribblingSuccessRate = dribblingSuccessRate;
-
     }
+
+
 
     public int getGoal() {
         return goal;

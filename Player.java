@@ -1,20 +1,36 @@
-abstract public class Player {
+import java.io.Serializable;
+
+abstract public class Player  implements Serializable {
+
+    private String playerID ;
     private String name ;
     private int age ;
     private String nationality;
+    private String position ;
     private int shirtNumber;
     private int numberOfAppearances;
     private double baseSalary ;
     private double marketValue ;
 
-    public Player(String name, int age, String nationality, int shirtNumber, int numberOfAppearances, double baseSalary, double marketValue) {
+
+    public Player(String playerID,String name, int age, String nationality,String position, int shirtNumber,int numberOfAppearances, double baseSalary, double marketValue) {
+        this.playerID = playerID;
         this.name = name;
         this.age = age;
         this.nationality = nationality;
+        this.position =position;
         this.shirtNumber = shirtNumber;
-        this.numberOfAppearances = numberOfAppearances;
+        this.numberOfAppearances= numberOfAppearances;
         this.baseSalary = baseSalary;
         this.marketValue = marketValue;
+    }
+
+    public Player() {
+
+    }
+
+    public String getPlayerID() {
+        return playerID;
     }
 
     public String getName() {
@@ -39,6 +55,14 @@ abstract public class Player {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public int getShirtNumber() {
@@ -80,8 +104,8 @@ abstract public class Player {
 
     @Override
     public String toString() {
-        return String.format("%-15s %-20s %-15s %-15s %-25s %-20s %-20s",
-                shirtNumber, name, age, nationality, marketValue,numberOfAppearances,baseSalary);
+        return String.format("%-20s %-15s %-20s %-15s %-15s %-20s %-25s %-20s %-20s",
+                playerID,shirtNumber, name, age, nationality,position,numberOfAppearances, marketValue,baseSalary);
     }
 }
 

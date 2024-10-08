@@ -11,6 +11,8 @@ public class Main {
             System.out.println("3.Hiển thị thông tin cầu thủ");
             System.out.println("4.Tính lương cầu thủ");
             System.out.println("5.Tìm kiếm cầu thủ");
+            System.out.println("6.Ghi file lữu diệu");
+            System.out.println("7.Đọc file dữ liệu");
             System.out.println("===========================================");
             int choice = scanner.nextInt();
             if(choice == 1){
@@ -27,6 +29,12 @@ public class Main {
             }
             if(choice == 5 ){
                 team.SeachPlayer();
+            }
+            if(choice == 6){
+                team.writeToFile();
+            }
+            if(choice == 7){
+                team.readFromFile();
             }
             else if (choice == 0){
                 break;

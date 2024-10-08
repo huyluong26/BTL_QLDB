@@ -3,14 +3,15 @@ public class Midfielder extends Player {
     private int assists ;
     private float passingAccuracy ;
 
-    public Midfielder(String name, int age, String nationality, int shirtNumber,
-                      int numberOfAppearances, double baseSalary, double marketValue,
-                      int goal, int assists, float passingAccuracy) {
-        super(name, age, nationality, shirtNumber, numberOfAppearances, baseSalary, marketValue);
+    public Midfielder(String playerID, String name, int age, String nationality, String position, int shirtNumber, int numberOfAppearances, double baseSalary,
+                      double marketValue ,int goal,int assists,float passingAccuracy ) {
+        super(playerID, name, age, nationality, position, shirtNumber, numberOfAppearances, baseSalary, marketValue);
         this.goal = goal ;
         this.assists = assists;
         this.passingAccuracy =passingAccuracy;
     }
+
+
 
     public int getGoal() {
         return goal;

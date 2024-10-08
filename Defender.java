@@ -3,14 +3,14 @@ public class Defender extends Player{
     private float aerialAbility;
     private float tackles ;
 
-    public Defender(String name, int age, String nationality, int shirtNumber,
-                    int numberOfAppearances, double baseSalary, double marketValue,
-                    int interceptions, float aerialAbility, float tackles ) {
-        super(name, age, nationality, shirtNumber, numberOfAppearances, baseSalary, marketValue);
+    public Defender(String playerID, String name, int age, String nationality, String position, int shirtNumber, int numberOfAppearances, double baseSalary,
+                    double marketValue,int interceptions,float aerialAbility,float tackles) {
+        super(playerID, name, age, nationality, position, shirtNumber, numberOfAppearances, baseSalary, marketValue);
         this.interceptions = interceptions ;
         this.aerialAbility =  aerialAbility ;
         this.tackles = tackles ;
     }
+
 
     public int getInterceptions() {
         return interceptions;

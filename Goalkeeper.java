@@ -3,14 +3,14 @@ public class Goalkeeper extends Player{
     private float shotStoppingAbility ;
     private float penaltySavePercentage ;
 
-    public Goalkeeper(String name, int age, String nationality, int shirtNumber,
-                      int numberOfAppearances, double baseSalary, double marketValue,
-                      int saves, float shotStoppingAbility, float penaltySavePercentage) {
-        super(name, age, nationality, shirtNumber, numberOfAppearances, baseSalary, marketValue);
+    public Goalkeeper(String playerID, String name, int age, String nationality, String position, int shirtNumber, int numberOfAppearances,
+                      double baseSalary, double marketValue,int saves,float shotStoppingAbility,float penaltySavePercentage) {
+        super(playerID, name, age, nationality, position, shirtNumber, numberOfAppearances, baseSalary, marketValue);
         this.saves = saves ;
         this.shotStoppingAbility = shotStoppingAbility;
         this.penaltySavePercentage = penaltySavePercentage ;
     }
+
 
     public int getSaves() {
         return saves;
