@@ -50,10 +50,10 @@ public class Forward  extends Player  {
 
     @Override
     public boolean parameter() {
-        System.out.println("Forward Parameters:");
-        System.out.println("Goals: " + goal);
-        System.out.println("Assists: " + assists);
-        System.out.println("Dribbling Success Rate: " + dribblingSuccessRate + "%");
+        System.out.println("Thông số cầu thủ:");
+        System.out.println("Bàn thắng: " + goal);
+        System.out.println("Kiến tạo: " + assists);
+        System.out.println("Tỷ lệ qua người: " + dribblingSuccessRate + "%");
         return false;
     }
 }

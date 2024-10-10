@@ -1,9 +1,12 @@
 import java.util.*;
 import java.io.*;
+import java.util.ArrayList;
 
 public class Team {
     Scanner scanner = new Scanner(System.in);
     ArrayList<Player> players = new ArrayList<>();
+    ArrayList<Match> matches = new ArrayList<>();
+
     public void addAPlayer() {
         try {
             System.out.println("Nhập vào mã cầu thủ :");
@@ -118,10 +121,10 @@ public class Team {
             System.out.println("Danh sach cầu thủ rỗng!");
             return;
         }
-        System.out.printf("%-20s %-15s %-20s %-15s %-15s %-20s %-25s %-20s %-20s\n"
-                ,"Mã cầu thủ", "Số áo","Tên cầu thủ", "Tuổi", "Quốc tịch","Vị trí thi đấu", "Giá trị chuyển nhượng","Số lần ra sân","Lương mỗi tuần ");
-        System.out.printf("%-20s %-15s %-20s %-15s %-15s %-20s %-25s %-20s %-20s\n","----------", "-----", "-----------", "----",
-                "---------","---------------",  "---------------------", "-------------", "--------------");
+        System.out.printf("%-20s %-15s %-20s %-15s %-15s %-20s %-20s %-25s %-20s\n"
+                ,"Mã cầu thủ", "Số áo","Tên cầu thủ", "Tuổi", "Quốc tịch","Vị trí thi đấu", "Số lần ra sân","Giá trị chuyển nhượng","Lương mỗi tuần ");
+        System.out.printf("%-20s %-15s %-20s %-15s %-15s %-20s %-20s %-25s %-20s\n","----------", "-----", "-----------", "----",
+                "---------","---------------", "-------------","---------------------", "--------------");
         for (Player player : players) {
             System.out.println(player.toString());
 
@@ -129,34 +132,34 @@ public class Team {
     }
 
     public void writeToFile() {
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(
-                new FileOutputStream("player.dat", true))) {
+        try (FileOutputStream fos = new FileOutputStream("players.dat", false);
+             ObjectOutputStream outputStream = new ObjectOutputStream(fos)) {
             outputStream.writeObject(players);
-            System.out.println("Ghi file thanh cong!");
+            System.out.println("Ghi file thành công!");
         } catch (IOException e) {
-            System.out.println("Khong the mo file de ghi!");
+            System.out.println("Không thể mở file để ghi!");
             e.printStackTrace();
         }
     }
 
+
     public void readFromFile() {
-        players.clear(); // Xóa danh sách hiện tại trước khi đọc từ file
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("player.dat"))) {
-            while (true) {
-                try {
-                    @SuppressWarnings("unchecked")
-                    List<Player> sv = (List<Player>) inputStream.readObject();
-                    players.addAll(sv);
-                } catch (EOFException e) {
-                    break; // Kết thúc tệp
-                }
-            }
+        players.clear();
+        try (ObjectInputStream inputStream = new ObjectInputStream(
+                new FileInputStream("players.dat"))) {
+            @SuppressWarnings("unchecked")
+            List<Player> sv = (List<Player>) inputStream.readObject();
+            players.addAll(sv);
             System.out.println("Doc file thanh cong!");
+        } catch (EOFException e) {
+            // Kết thúc tệp, không cần xử lý gì
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Khong the mo file de doc!");
             e.printStackTrace();
         }
     }
+
+
 
     public void RemovePlayer() {
         try {
@@ -166,7 +169,7 @@ public class Team {
             Player playerToRemove = null;
             for (Player player : players) {
                 if (player.getPlayerID().equalsIgnoreCase(playerID)) {
-                    playerToRemove = player; // Lưu lại cầu thủ cần xóa
+                    playerToRemove = player;
                     playerFound = true;
                     break;
                 }
@@ -199,7 +202,6 @@ public class Team {
             boolean playerFound = false;
             for (Player player : players) {
                 if (player.getPlayerID().equalsIgnoreCase(playerID)) {
-                    // Tính toán lương dựa trên phương thức salaryCalculation của cầu thủ
                     totalSalary = player.salaryCalculation();
                     playerFound = true;
                     break;
@@ -223,23 +225,23 @@ public class Team {
 
 
     public void SeachPlayer() {
+        System.out.println(players.size());
         try {
             System.out.println("Nhập vào mã cầu thủ cần tìm:");
-            String name = scanner.nextLine();  // Đầu vào có thể gây ra lỗi nếu scanner gặp vấn đề
-            double totalSalary = 0;
+            String name = scanner.nextLine().trim();
             boolean playerFound = false;
+
             if (players.isEmpty()) {
                 throw new Exception("Danh sách cầu thủ đang trống.");
             }
+
             for (Player player : players) {
-                if (player.getPlayerID().equalsIgnoreCase(name)) {
+                if (player.getPlayerID().contains(name)) {
                     System.out.println(player.toString());
                     System.out.println("==========Thông số===============");
                     System.out.println(player.parameter());
                     System.out.println("=================================");
-
                     playerFound = true;
-                    break;
                 }
             }
             if (playerFound) {
@@ -258,6 +260,228 @@ public class Team {
     }
 
 
+    public void  sortPlayersBySalary() {
+        if (players.isEmpty()) {
+            System.out.println("Danh sach cầu thủ rỗng!");
+            return;
+        }
+        else {
+            int n = players.size();
+            for (int i = 0; i < n - 1; i++) {
+                for (int j = 0; j < n - i - 1; j++) {
+                    if (players.get(j).salaryCalculation() > players.get(j + 1).salaryCalculation()) {
+                        Player temp = players.get(j);
+                        players.set(j, players.get(j + 1));
+                        players.set(j + 1, temp);
+                    }
+                }
+                System.out.println("Lương cầu thủ đã được sắp xếp ");
+            }
+        }
+    }
+    public String getPlayerNameByID(String playerID) {
+        for (Player player : players) {
+            if (player.getPlayerID().contains(playerID)) {
+                return player.getName();
+            }
+        }
+        return "Không tìm thấy cầu thủ với mã " + playerID;
+    }
+    public void addAMatch() {
+        try {
+            System.out.println("Nhập vào mã cua trận đấu :");
+            String matchID = scanner.nextLine();
+            System.out.println("Nhập vào ngày diễn ra trận đấu :");
+            String dateOfMatch = scanner.nextLine();
+            System.out.println("Nhập vào tên đội nhà: ");
+            String homeTeam = scanner.nextLine();
+            System.out.println("Nhập vào tên đội đối thủ: ");
+            String awayTeam = scanner.nextLine();
+            System.out.println("Nhập vào số bàn thắng của " + homeTeam + ":");
+            int homeScore = scanner.nextInt();
+            System.out.println("Nhập vào số bàn thắng của " + awayTeam + ":");
+            int awayScore = scanner.nextInt();
+            scanner.nextLine();
+            DisplayInformation();
+            System.out.println("====== Nhập vào đội hình ra sân ======");
+            String nameGK = "", nameLB ="", nameLCB =" ", nameRCB="", nameRB="", nameLCM="", nameRCM="", nameCM="", nameST="", nameRW="", nameLW="";
+            for (int i = 0; i < 11; i++) {
+                switch (i) {
+                    case 0:
+                        System.out.println("Nhập vào mã thủ môn:");
+                        String gkID = scanner.nextLine();
+                        nameGK=getPlayerNameByID(gkID);
+                        break;
+                    case 1:
+                        System.out.println("Nhập vào mã hậu vệ cánh trái:");
+                        String LbID = scanner.nextLine();
+                        nameLB=getPlayerNameByID(LbID);
+                        break;
+                    case 2:
+                        System.out.println("Nhập vào mã hậu vệ cánh phải:");
+                        String rbID = scanner.nextLine();
+                        nameRB=getPlayerNameByID(rbID);
+                        break;
+                    case 3:
+                        System.out.println("Nhập vào mã trung vệ trái:");
+                        String lcbID = scanner.nextLine();
+                        nameLCB=getPlayerNameByID(lcbID);
+                        break;
+                    case 4:
+                        System.out.println("Nhập vào mã trung vệ phải:");
+                        String rcbID = scanner.nextLine();
+                        nameRCB=getPlayerNameByID(rcbID);
+                        break;
+                    case 5:
+                        System.out.println("Nhập vào mã tiền vệ trái:");
+                        String lcmID = scanner.nextLine();
+                        nameLCM=getPlayerNameByID(lcmID);
+                        break;
+                    case 6:
+                        System.out.println("Nhập vào mã tiền vệ phải:");
+                        String rcmID = scanner.nextLine();
+                        nameRCM=getPlayerNameByID(rcmID);
+                        break;
+                    case 7:
+                        System.out.println("Nhập vào mã tiền vệ trung tâm:");
+                        String cmID = scanner.nextLine();
+                        nameCM=getPlayerNameByID(cmID);
+                        break;
+                    case 8:
+                        System.out.println("Nhập vào mã tiền đạo cánh phải:");
+                        String rwID = scanner.nextLine();
+                        nameRW=getPlayerNameByID(rwID);
+                        break;
+                    case 9:
+                        System.out.println("Nhập vào mã tiền đạo cánh trái:");
+                        String lwID = scanner.nextLine();
+                        nameLW=getPlayerNameByID(lwID );
+                        break;
+                    case 10:
+                        System.out.println("Nhập vào mã tiền đạo cắm:");
+                        String stID = scanner.nextLine();
+                        nameST=getPlayerNameByID(stID);
+                        break;
+                }
+            }
+            Match newMatch = new Match(matchID,dateOfMatch,homeTeam, awayTeam,homeScore,awayScore );
+            System.out.println("Đội hình ra sân");
+            newMatch.Lineup(nameGK , nameLB , nameLCB , nameRCB, nameRB, nameLCM, nameRCM, nameCM, nameST, nameRW, nameLW);
+            matches.add(newMatch);
+            System.out.println("Thêm trận đấu thành công !");
+        } catch (Exception e) {
+            System.out.println("Đã xảy ra lỗi: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    public void writeMatchToFile() {
+        try (FileOutputStream fos = new FileOutputStream("matchs.dat", false);
+             ObjectOutputStream outputStream = new ObjectOutputStream(fos)) {
+            outputStream.writeObject(matches);
+            System.out.println("Ghi file thành công!");
+        } catch (IOException e) {
+            System.out.println("Không thể mở file để ghi!");
+            e.printStackTrace();
+        }
+    }
+
+
+    public void readMatchFromFile() {
+        matches.clear();
+        try (ObjectInputStream inputStream = new ObjectInputStream(
+                new FileInputStream("matchs.dat"))) {
+            @SuppressWarnings("unchecked")
+            List<Match> mt = (List<Match>) inputStream.readObject();
+            matches.addAll(mt);
+            System.out.println("Doc file thanh cong!");
+        } catch (EOFException e) {
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Khong the mo file de doc!");
+            e.printStackTrace();
+        }
+    }
+
+    public void DisplayMatchesInformation(){
+        System.out.println(matches.size());
+        if (matches.isEmpty()) {
+            System.out.println("Danh sách thông tin trận đấu rỗng!");
+            return;
+        }
+        for (Match match : matches) {
+            System.out.println(match.hienthi());
+
+
+        }
+    }
+
+    public void RemoveMatch() {
+        try {
+            System.out.println("Nhập vào mã trận đấu cần xoá: ");
+            String matchID = scanner.nextLine();
+            boolean matchFound = false;
+            Match matchToRemove = null;
+            for (Match match : matches) {
+                if (match.getMatchID().equalsIgnoreCase(matchID)) {
+                    matchToRemove = match;
+                    matchFound = true;
+                    break;
+                }
+            }
+            if (matchFound && matchToRemove != null) {
+                matches.remove(matchToRemove);
+                System.out.println("Lịch sử trận đấu  " + matchID + " đã được xoá.");
+            } else {
+                System.out.println("Trận đấu" + matchID + " không tồn tại.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Lỗi: Dữ liệu nhập vào không hợp lệ. Vui lòng thử lại.");
+            scanner.nextLine();  // Xóa dòng nhập sai
+
+        } catch (ConcurrentModificationException e) {
+            System.out.println("Lỗi: Có sự thay đổi đồng thời khi xóa thông tin trận đấu. Vui lòng thử lại.");
+
+        } catch (Exception e) {
+            System.out.println("Đã xảy ra lỗi. Vui lòng thử lại.");
+            e.printStackTrace();
+        }
+    }
+
+    public void SeachMatch() {
+        try {
+            System.out.println("Nhập vào mã trận đấu cần tìm:");
+            String matchID = scanner.nextLine();
+            boolean matchFound = false;
+            if (matches.isEmpty()) {
+                throw new Exception("Danh sách thông tin trận đấu trống.");
+            }
+            for (Match match : matches) {
+                if (match.getMatchID().equalsIgnoreCase(matchID)) {
+                    System.out.println("=================================");
+                    System.out.println(match.hienthi());
+                    System.out.println("=================================");
+
+                    matchFound = true;
+                    break;
+                }
+            }
+            if (matchFound) {
+                System.out.println("Trận đấu có mã"+matchID+ " đã được tìm thấy.");
+            } else {
+                System.out.println("Trận đấu có mã " + matchID + " không tồn tại trong đội.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Lỗi: Đầu vào không hợp lệ. Vui lòng nhập mã trận đấu đúng định dạng.");
+            scanner.nextLine();
+        } catch (NullPointerException e) {
+            System.out.println("Lỗi: Không thể tìm kiếm thông tin trận đấu vì có dữ liệu bị thiếu.");
+        } catch (Exception e) {
+            System.out.println("Đã xảy ra lỗi: " + e.getMessage());
+        }
+    }
+
+
 
 
 }
+
+
