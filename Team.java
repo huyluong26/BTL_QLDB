@@ -375,7 +375,7 @@ public class Team {
         }
     }
     public void writeMatchToFile() {
-        try (FileOutputStream fos = new FileOutputStream("matchs.dat", false);
+        try (FileOutputStream fos = new FileOutputStream("matches.dat", false);
              ObjectOutputStream outputStream = new ObjectOutputStream(fos)) {
             outputStream.writeObject(matches);
             System.out.println("Ghi file thành công!");
@@ -389,7 +389,7 @@ public class Team {
     public void readMatchFromFile() {
         matches.clear();
         try (ObjectInputStream inputStream = new ObjectInputStream(
-                new FileInputStream("matchs.dat"))) {
+                new FileInputStream("matches.dat"))) {
             @SuppressWarnings("unchecked")
             List<Match> mt = (List<Match>) inputStream.readObject();
             matches.addAll(mt);
@@ -408,7 +408,7 @@ public class Team {
             return;
         }
         for (Match match : matches) {
-            System.out.println(match.hienthi());
+            System.out.println(match.displayMath());
 
 
         }
@@ -446,7 +446,7 @@ public class Team {
         }
     }
 
-    public void SeachMatch() {
+    public void SearchMatch() {
         try {
             System.out.println("Nhập vào mã trận đấu cần tìm:");
             String matchID = scanner.nextLine();
@@ -457,7 +457,7 @@ public class Team {
             for (Match match : matches) {
                 if (match.getMatchID().equalsIgnoreCase(matchID)) {
                     System.out.println("=================================");
-                    System.out.println(match.hienthi());
+                    System.out.println(match.displayMath());
                     System.out.println("=================================");
 
                     matchFound = true;

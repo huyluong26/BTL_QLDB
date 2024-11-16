@@ -45,7 +45,7 @@ public class Match implements Serializable {
 
     }
 
-    public String hienthi() {
+    public String displayMath() {
         System.out.println("Mã trận đấu: "+matchID+"\n"+
                 "Ngày thi đấu: " + dateOfMatch + "\n" +
                 "Kết quả trận đấu: " + homeTeam + " " + homeScore + " - " + awayScore + " " + awayTeam);
