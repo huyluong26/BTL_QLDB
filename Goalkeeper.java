@@ -1,3 +1,5 @@
+package PlayersA;
+
 public class Goalkeeper extends Player{
     private int saves ;
     private float shotStoppingAbility ;

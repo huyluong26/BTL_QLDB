@@ -1,3 +1,5 @@
+package PlayersA;
+
 public class Config {
     public double performanceBonus = 20000 ;
     public double appearancesBonus = 3000;

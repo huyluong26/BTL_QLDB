@@ -1,3 +1,5 @@
+package PlayersA;
+
 import java.io.Serializable;
 
 abstract public class Player  implements Serializable {
@@ -104,8 +106,7 @@ abstract public class Player  implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%-20s %-15s %-20s %-15s %-15s %-20s %-25s %-20s %-20s",
+        return String.format("%-20s %-15s %-20s %-15s %-15s %-20s %-20s %-25s %-20s",
                 playerID,shirtNumber, name, age, nationality,position,numberOfAppearances, marketValue,baseSalary);
     }
 }
-

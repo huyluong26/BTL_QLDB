@@ -1,8 +1,10 @@
+package MatchPro;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-// Lớp Match - lớp cha
 public class Match implements Serializable {
+    private String matchID;
     private String dateOfMatch;
     private String homeTeam;
     private String awayTeam;
@@ -10,7 +12,8 @@ public class Match implements Serializable {
     private int awayScore;
 
 
-    public Match(String dateOfMatch, String homeTeam, String awayTeam, int homeScore, int awayScore) {
+    public Match(String matchID,String dateOfMatch, String homeTeam, String awayTeam, int homeScore, int awayScore) {
+        this.matchID = matchID;
         this.dateOfMatch = dateOfMatch;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
@@ -22,29 +25,30 @@ public class Match implements Serializable {
         System.out.println(" __________________________________________________________________ ");
         System.out.println("|                    |    |           |    |                       |");
         System.out.println("|                    |    |___________|    |                       |");
-        System.out.println("|                    |   "  + nameGK +  "  |                       |");
+        System.out.println("|                    |     "+ nameGK+"     |                       |");
         System.out.println("|                    |_____________________|                       |");
         System.out.println("|                        -_____________-                           |");
-        System.out.println("| "+nameRB+"      "+nameRCB+"         "+nameLCB+"       "+nameLB+" |");
+        System.out.println("|"+nameRB+"       "+nameRCB+"       "+nameLCB+"          "+nameLB+"|");
         System.out.println("|                                                                  |");
         System.out.println("|                                                                  |");
         System.out.println("|                                                                  |");
-        System.out.println("|          "+nameRCM+"                          "+nameLCM+"        |");
+        System.out.println("|                   "+nameRCM+"      "+nameLCM+"                   |");
         System.out.println("|                                                                  |");
-        System.out.println("|                             "+nameCM+"                           |");
+        System.out.println("|                            "+nameCM+"                            |");
         System.out.println("|                                                                  |");
         System.out.println("|                                                                  |");
         System.out.println("|                                                                  |");
-        System.out.println("| "+nameRW+"             _________________          "+nameLW+"     |");
+        System.out.println("|    "+nameRW+"          _________________      "+nameLW+"         |");
         System.out.println("|                     _                      _                     |");
         System.out.println("|                   _                          _                   |");
-        System.out.println("|                  _         "+nameST+"         _                  |");
+        System.out.println("|                  _        "+nameST+"           _                 |");
         System.out.println("|__________________________________________________________________|");
 
     }
 
-    public String toString() {
-        System.out.println("Ngày thi đấu: " + dateOfMatch + "\n" +
+    public String displayMath() {
+        System.out.println("Mã trận đấu: "+matchID+"\n"+
+                "Ngày thi đấu: " + dateOfMatch + "\n" +
                 "Kết quả trận đấu: " + homeTeam + " " + homeScore + " - " + awayScore + " " + awayTeam);
         if (homeScore > awayScore) {
             System.out.println("Thắng");
@@ -77,6 +81,10 @@ public class Match implements Serializable {
         return awayScore;
     }
 
+    public String getMatchID() {
+        return matchID;
+    }
+
     //Setter methods
     public void setHomeTeam(String homeTeam) {
         this.homeTeam = homeTeam;
@@ -97,47 +105,17 @@ public class Match implements Serializable {
     public void setDateOfMatch(String dateOfMatch) {
         this.dateOfMatch = dateOfMatch;
     }
+
+    public void setMatchID(String matchID) {
+        this.matchID = matchID;
+    }
 }
 
-    // Lớp UclMatch - thừa kế từ Match
-    class UclMatch extends Match {
-        private String stadium;
-
-        public UclMatch(String dateOfMatch,String homeTeam, String awayTeam, int homeScore, int awayScore) {
-            super(dateOfMatch,homeTeam, awayTeam, homeScore, awayScore);
-
-        }
-
-        @Override
-        public void Lineup(String nameGK,String nameRB, String nameRCB,String nameLCB, String nameLB, String nameRCM, String nameLCM
-                ,String nameCM, String nameRW, String nameST,String nameLW) {
-
-        }
-
-
-        public void uclMatchInfo() {
-            super.toString();
-            System.out.println("Stadium: " + stadium);
-        }
-    }
-
-    // Lớp EplMatch - thừa kế từ Match
-    class EplMatch extends Match {
-        private String referee;
-
-        public EplMatch(String dateOfMatch,String homeTeam, String awayTeam, int homeScore, int awayScore, String referee) {
-            super(dateOfMatch,homeTeam, awayTeam, homeScore, awayScore);
-            this.referee = referee;
-        }
 
 
 
 
-        public void eplMatchInfo() {
-            super.toString();
-            System.out.println("Referee: " + referee);
-        }
 
-    }
+
 
 

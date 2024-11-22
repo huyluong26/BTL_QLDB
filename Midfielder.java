@@ -1,3 +1,5 @@
+package PlayersA;
+
 public class Midfielder extends Player {
     private int goal ;
     private int assists ;
@@ -10,8 +12,6 @@ public class Midfielder extends Player {
         this.assists = assists;
         this.passingAccuracy =passingAccuracy;
     }
-
-
 
     public int getGoal() {
         return goal;
@@ -50,10 +50,10 @@ public class Midfielder extends Player {
 
     @Override
     public boolean parameter() {
-        System.out.println("Forward Parameters:");
-        System.out.println("Goals: " + goal);
-        System.out.println("Assists: " + assists);
-        System.out.println("Dribbling Success Rate: " + passingAccuracy + "%");
+        System.out.println("Thông số cầu thủ:");
+        System.out.println("Bàn thắng: " + goal);
+        System.out.println("Kiến tạo: " + assists);
+        System.out.println("Tỷ lệ chuyền chính xác: " + passingAccuracy + "%");
 
         return false;
     }
