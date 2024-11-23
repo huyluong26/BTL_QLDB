@@ -1,3 +1,7 @@
+package Management;
+
+import MatchPro.*;
+import PlayersA.*;
 import java.util.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -9,8 +13,26 @@ public class Team {
 
     public void addAPlayer() {
         try {
-            System.out.println("Nhập vào mã cầu thủ :");
-            String playerID = scanner.nextLine();
+            String playerID;
+            while (true) {
+                System.out.println("Nhập vào mã cầu thủ:");
+                playerID = scanner.nextLine();
+                boolean exists = false;
+
+                for (Player player : players) {
+                    if (player.getPlayerID().equalsIgnoreCase(playerID)) {
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if (exists) {
+                    System.out.println("Mã cầu thủ đã tồn tại. Vui lòng nhập lại!");
+                } else {
+                    break;
+                }
+            }
+
             System.out.println("Nhập vào tên cầu thủ: ");
             String name = scanner.nextLine();
             System.out.println("Nhập vào tuổi cầu thủ: ");
@@ -115,6 +137,7 @@ public class Team {
             e.printStackTrace();
         }
     }
+
 
     public void DisplayInformation(){
         if (players.isEmpty()) {
@@ -222,6 +245,66 @@ public class Team {
             e.printStackTrace();
         }
     }
+    public void Update(){
+        System.out.println(players.size());
+        try {
+            System.out.println("Nhập vào mã cầu thủ cần sửa:");
+            String name = scanner.nextLine().trim();
+            boolean playerFound = false;
+
+            if (players.isEmpty()) {
+                throw new Exception("Danh sách cầu thủ đang trống.");
+            }
+
+            for (Player player : players) {
+                if (player.getPlayerID().contains(name)) {
+                    System.out.println("Tên muốn sửa: ");
+                    String names = scanner.nextLine().trim();
+                    player.setName(names);
+                    System.out.println("Tuổi muốn sửa: ");
+                    int age = scanner.nextInt();
+                    scanner.nextLine();
+                    player.setAge(age);
+                    System.out.println("Quốc tịch muốn sửa: ");
+                    String nationality = scanner.nextLine();
+                    player.setNationality(nationality);
+                    System.out.println("Vị trí muốn sửa: ");
+                    String position = scanner.nextLine();
+                    player.setPosition(position);
+                    System.out.println("Số áo muốn sửa: ");
+                    int shirtNumber = scanner.nextInt();
+                    scanner.nextLine();
+                    player.setShirtNumber(shirtNumber);
+                    System.out.println("Số lần ra sân muốn sửa: ");
+                    int numberOfAppearances = scanner.nextInt();
+                    scanner.nextLine();
+                    player.setNumberOfAppearances(numberOfAppearances);
+                    System.out.println("Mức lương muốn sửa: ");
+                    double  baseSalary = scanner.nextDouble();
+                    scanner.nextLine();
+                    player.setBaseSalary( baseSalary);
+                    System.out.println("Giá trị chuyển nhượng muốn sửa: ");
+                    double  marketValue = scanner.nextDouble();
+                    scanner.nextLine();
+                    player.setMarketValue(marketValue);
+
+                    playerFound = true;
+                }
+            }
+            if (playerFound) {
+                System.out.println(name + " đã được sửa thông tin thành công .");
+            } else {
+                System.out.println("Cầu thủ " + name + " không tồn tại trong đội.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Lỗi: Đầu vào không hợp lệ. Vui lòng nhập mã cầu thủ đúng định dạng.");
+            scanner.nextLine();
+        } catch (NullPointerException e) {
+            System.out.println("Lỗi: Không thể tìm kiếm cầu thủ vì có dữ liệu bị thiếu.");
+        } catch (Exception e) {
+            System.out.println("Đã xảy ra lỗi: " + e.getMessage());
+        }
+    }
 
 
     public void SeachPlayer() {
@@ -237,6 +320,10 @@ public class Team {
 
             for (Player player : players) {
                 if (player.getPlayerID().contains(name)) {
+                    System.out.printf("%-20s %-15s %-20s %-15s %-15s %-20s %-20s %-25s %-20s\n"
+                            ,"Mã cầu thủ", "Số áo","Tên cầu thủ", "Tuổi", "Quốc tịch","Vị trí thi đấu", "Số lần ra sân","Giá trị chuyển nhượng","Lương mỗi tuần ");
+                    System.out.printf("%-20s %-15s %-20s %-15s %-15s %-20s %-20s %-25s %-20s\n","----------", "-----", "-----------", "----",
+                            "---------","---------------", "-------------","---------------------", "--------------");
                     System.out.println(player.toString());
                     System.out.println("==========Thông số===============");
                     System.out.println(player.parameter());
@@ -275,8 +362,9 @@ public class Team {
                         players.set(j + 1, temp);
                     }
                 }
-                System.out.println("Lương cầu thủ đã được sắp xếp ");
+
             }
+            System.out.println("Lương cầu thủ đã được sắp xếp ");
         }
     }
     public String getPlayerNameByID(String playerID) {
@@ -287,6 +375,79 @@ public class Team {
         }
         return "Không tìm thấy cầu thủ với mã " + playerID;
     }
+
+
+    public void rewardPlayer() {
+        try {
+            System.out.println("--- Chọn tiêu chí để khen thưởng ---");
+            System.out.println("1. Số bàn thắng cao nhất (Tiền đạo)");
+            System.out.println("2. Số kiến tạo cao nhất (Tiền vệ)");
+            System.out.println("3. Số lần truy cản cao nhất (Hậu vệ)");
+            System.out.println("4. Số lần cản phá cao nhất (Thủ môn)");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            Player rewardedPlayer = null;
+            String achievement = "";
+            double rewardAmount;
+
+            for (Player player : players) {
+                if (choice == 1 && player instanceof Forward) {
+                    Forward forward = (Forward) player;
+                    if (rewardedPlayer == null || forward.getGoal() > ((Forward) rewardedPlayer).getGoal()) {
+                        rewardedPlayer = forward;
+                        achievement = forward.getName() + " với " + forward.getGoal() + " bàn thắng!";
+                    }
+                } else if (choice == 2 && player instanceof Midfielder) {
+                    Midfielder midfielder = (Midfielder) player;
+                    if (rewardedPlayer == null || midfielder.getAssists() > ((Midfielder) rewardedPlayer).getAssists()) {
+                        rewardedPlayer = midfielder;
+                        achievement = midfielder.getName() + " với " + midfielder.getAssists() + " kiến tạo!";
+                    }
+                } else if (choice == 3 && player instanceof Defender) {
+                    Defender defender = (Defender) player;
+                    if (rewardedPlayer == null || defender.getInterceptions() > ((Defender) rewardedPlayer).getInterceptions()) {
+                        rewardedPlayer = defender;
+                        achievement = defender.getName() + " với " + defender.getInterceptions() + " lần truy cản!";
+                    }
+                } else if (choice == 4 && player instanceof Goalkeeper) {
+                    Goalkeeper goalkeeper = (Goalkeeper) player;
+                    if (rewardedPlayer == null || goalkeeper.getSaves() > ((Goalkeeper) rewardedPlayer).getSaves()) {
+                        rewardedPlayer = goalkeeper;
+                        achievement = goalkeeper.getName() + " với " + goalkeeper.getSaves() + " lần cản phá!";
+                    }
+                }
+            }
+
+
+            if (rewardedPlayer != null) {
+                System.out.println("Cầu thủ xuất sắc nhất: " + achievement);
+                System.out.println("Nhập số tiền thưởng (VND): ");
+                rewardAmount = scanner.nextDouble();
+                scanner.nextLine();
+
+                double newSalary = rewardedPlayer.getBaseSalary() + rewardAmount;
+                rewardedPlayer.setBaseSalary(newSalary);
+
+                System.out.println("Cầu thủ " + rewardedPlayer.getName() + " đã được thưởng " + rewardAmount + " VND!");
+                System.out.println("Tổng lương mới của " + rewardedPlayer.getName() + " là " + newSalary + " VND!");
+            } else {
+                System.out.println("Không có cầu thủ nào thỏa mãn tiêu chí đã chọn.");
+            }
+
+        } catch (InputMismatchException e) {
+            System.out.println("Lỗi: Dữ liệu nhập vào không hợp lệ. Vui lòng thử lại.");
+            scanner.nextLine();
+        } catch (Exception e) {
+            System.out.println("Đã xảy ra lỗi: " + e.getMessage());
+        }
+    }
+
+
+
+
+
+
     public void addAMatch() {
         try {
             System.out.println("Nhập vào mã cua trận đấu :");
@@ -479,9 +640,79 @@ public class Team {
         }
     }
 
+    public double calculateTotalMarketValue() {
+        double totalMarketValue = 0;
+        for (Player player : players) {
+            totalMarketValue += player.getMarketValue();
+        }
+        System.out.printf("Tổng giá trị chuyển nhượng của đội hình: %.2f %n", totalMarketValue);
+        return totalMarketValue;
+    }
+
+
+    public void calculateTotalGoalsAndConceded() {
+        int totalGoals = 0;
+        int totalGoalsConceded = 0;
+
+        for (Match match : matches) {
+            totalGoals += match.getHomeScore();
+            totalGoalsConceded += match.getAwayScore();
+        }
+
+        System.out.println("Tổng số bàn thắng đội ghi được: " + totalGoals);
+        System.out.println("Tổng số bàn thua đội phải nhận: " + totalGoalsConceded);
+    }
+
+    public void calculateMatchResults() {
+        int totalWins = 0;
+        int totalDraws = 0;
+        int totalLosses = 0;
+
+        for (Match match : matches) {
+            if (match.getHomeScore() > match.getAwayScore()) {
+                totalWins++;
+            } else if (match.getHomeScore() == match.getAwayScore()) {
+                totalDraws++;
+            } else {
+                totalLosses++;
+            }
+        }
+
+        int totalMatches = matches.size();
+        double winRate = (totalMatches == 0) ? 0 : ((double) totalWins / totalMatches) * 100;
+
+        System.out.println("Tổng số trận thắng: " + totalWins);
+        System.out.println("Tổng số trận hòa: " + totalDraws);
+        System.out.println("Tổng số trận thua: " + totalLosses);
+        System.out.println("Tổng số trận đấu: " + totalMatches);
+        System.out.println("Tỷ lệ thắng: " + String.format("%.2f", winRate) + "%");
+    }
+    public void calculateTotalGoalsAndAssists() {
+        int totalGoals = 0;
+        int totalAssists = 0;
+        for (Player player : players) {
+            if (player instanceof Forward) {
+                Forward forward = (Forward) player;
+                totalGoals += forward.getGoal();
+                totalAssists += forward.getAssists();
+                System.out.println("Cầu thủ " + forward.getName() + " (Forward): " +
+                        "Bàn thắng = " + forward.getGoal() + ", Kiến tạo = " + forward.getAssists());
+            }
+            else if (player instanceof Midfielder) {
+                Midfielder midfielder = (Midfielder) player;
+                totalGoals += midfielder.getGoal();
+                totalAssists += midfielder.getAssists();
+                System.out.println("Cầu thủ " + midfielder.getName() + " (Midfielder): " +
+                        "Bàn thắng = " + midfielder.getGoal() + ", Kiến tạo = " + midfielder.getAssists());
+            }
+        }
+        System.out.println("===========================================");
+        System.out.println("Tổng số bàn thắng của các cầu thủ: " + totalGoals);
+        System.out.println("Tổng số kiến tạo của các cầu thủ: " + totalAssists);
+    }
+
 
 
 
 }
-
 

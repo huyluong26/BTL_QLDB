@@ -1,3 +1,5 @@
+package PlayersA;
+
 public class Forward  extends Player  {
     private int goal ;
     private int assists ;

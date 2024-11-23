@@ -1,3 +1,5 @@
+package PlayersA;
+
 import java.io.Serializable;
 
 abstract public class Player  implements Serializable {
@@ -108,4 +110,3 @@ abstract public class Player  implements Serializable {
                 playerID,shirtNumber, name, age, nationality,position,numberOfAppearances, marketValue,baseSalary);
     }
 }
-

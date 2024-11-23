@@ -1,3 +1,5 @@
+package PlayersA;
+
 public class Midfielder extends Player {
     private int goal ;
     private int assists ;
